@@ -171,7 +171,7 @@ void Buzzer_Stop(void) {
     TIM2->CCR2 = 0;
 }
 
-// 3. I2C INIT
+
 void I2C1_Init(void) {
     RCC->APB1ENR |= RCC_APB1ENR_I2C1EN;
 
@@ -253,13 +253,13 @@ void LCD_String(char *str) {
     while (*str) LCD_SendData(*str++);
 }
 
-// 4. EXTI INIT
+
 void EXTI_Init(void) {
     RCC->APB2ENR |= RCC_APB2ENR_SYSCFGEN;
 
-    // Clear mapping dulu
+    // Bit clear
     SYSCFG->EXTICR[0] &= ~(0xFFF); 
-    // Default 0000 sudah mapping ke PAx, jadi tidak perlu Set lagi jika pakai PA
+    
     
     EXTI->IMR |= (EXTI_IMR_MR0 | EXTI_IMR_MR1 | EXTI_IMR_MR2);     // Unmask
     EXTI->FTSR |= (EXTI_FTSR_TR0 | EXTI_FTSR_TR1 | EXTI_FTSR_TR2); // Falling Edge
@@ -267,4 +267,5 @@ void EXTI_Init(void) {
     NVIC_EnableIRQ(EXTI0_IRQn);
     NVIC_EnableIRQ(EXTI1_IRQn);
     NVIC_EnableIRQ(EXTI2_IRQn);
+
 }
